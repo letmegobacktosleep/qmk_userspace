@@ -12,3 +12,5 @@ jobs:
     with:
       qmk_repo: vial-kb/vial-qmk
       qmk_ref: vial
+      preparation_command: |
+        cp -r keyboards/* qmk_firmware/keyboards/
