@@ -1,0 +1,44 @@
+#ifdef RGB_MATRIX_ENABLE
+// Layer and Mods indicator
+#define LED_CENTER_TOP 1
+#define LED_CENTER_BOTTOM 0
+
+#define LAYER_R layer_colors[layer][0] *  val / 255
+#define LAYER_G layer_colors[layer][1] *  val / 255
+#define LAYER_B layer_colors[layer][2] *  val / 255
+
+#define MODS_ACTIVE(mods) ((get_mods()|get_oneshot_mods()) & MOD_MASK_##mods ? val : 0)
+#define SHIFT_ACTIVE (get_mods() & MOD_MASK_SHIFT ? val / 4 : 0)
+#define MODS_R MODS_ACTIVE(CTRL) + SHIFT_ACTIVE
+#define MODS_G MODS_ACTIVE(GUI) + SHIFT_ACTIVE
+#define MODS_B MODS_ACTIVE(ALT) + SHIFT_ACTIVE
+
+const uint8_t PROGMEM layer_colors[][3] = {
+    {RGB_OFF},
+    {RGB_RED},
+    {RGB_GREEN},
+    {RGB_BLUE},
+    {RGB_YELLOW},
+    {RGB_PURPLE},
+    {RGB_PINK},
+    {RGB_TEAL}
+};
+
+void set_rgb_matrix_indicators(uint8_t led_min, uint8_t led_max) {
+
+	uint8_t val = rgb_matrix_get_val();
+    int layer = get_highest_layer(layer_state | default_layer_state);
+    
+    RGB_MATRIX_INDICATOR_SET_COLOR(LED_CENTER_TOP, LAYER_R, LAYER_G, LAYER_B);
+    /* uprintf("layer RGB: (%u, %u, %u)\n", LAYER_R, LAYER_G, LAYER_B); */
+
+    RGB_MATRIX_INDICATOR_SET_COLOR(LED_CENTER_BOTTOM, MODS_R, MODS_G, MODS_B);
+    /* uprintf("mod RGB: (%u, %u, %u)\n", MODS_R, MODS_G, MODS_B); */
+
+}
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    set_rgb_matrix_indicators(led_min, led_max);
+    return false;
+}
+#endif
