@@ -5,9 +5,6 @@
 #define SERIAL_USART_TX_PIN GP0
 #define SERIAL_USART_RX_PIN GP1
 
-/* Change Debounce time from 5ms to 10ms for less noise with asym_defer_pk*/
-#define DEBOUNCE 10
-
 /* Change Mouse acceleration */
 #define MOUSEKEY_INERTIA
 #define MOUSEKEY_DELAY 100
