@@ -1,7 +1,8 @@
 {
     "userspace_version": "1.0",
     "build_targets": [
+        ["letmegobacktosleep/split65", "vial"],
         ["letmegobacktosleep/le_chiffre_rgb", "vial"],
-        ["letmegobacktosleep/split65", "vial"]
+        ["letmegobacktosleep/L44D", "vial"]
     ]
 }
