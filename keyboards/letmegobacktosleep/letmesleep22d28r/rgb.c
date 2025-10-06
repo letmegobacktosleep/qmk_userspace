@@ -2,11 +2,11 @@
 
 #ifdef RGB_MATRIX_ENABLE
 
-#define DISCRETE_CAPS 0
-#define DISCRETE_NUML 1
-#define DISCRETE_SCRL 2
-#define LAYER_INDICATOR_MIN 3
-#define LAYER_INDICATOR_MAX 5
+#define DISCRETE_CAPS 3
+#define DISCRETE_NUML 4
+#define DISCRETE_SCRL 5
+#define LAYER_INDICATOR_MIN 2
+#define LAYER_INDICATOR_MAX 0
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
 
@@ -37,10 +37,17 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
         if (layer_state_is(layer)){
 
             // set discrete layer indicator LEDs
+#         if (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
             RGB_MATRIX_INDICATOR_SET_COLOR(
                 MIN((LAYER_INDICATOR_MIN + layer - 1), (LAYER_INDICATOR_MAX)),
                 val, val, val // set to white
             );
+#         else
+            RGB_MATRIX_INDICATOR_SET_COLOR(
+                MIN((LAYER_INDICATOR_MAX + layer - 1), (LAYER_INDICATOR_MIN)),
+                val, val, val // set to white
+            );
+#         endif
 #         ifdef DYNAMIC_KEYMAP_LAYER_COUNT
             // set HSV
             hsv_t hsv = (hsv_t){
