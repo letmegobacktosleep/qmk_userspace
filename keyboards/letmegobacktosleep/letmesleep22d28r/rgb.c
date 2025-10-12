@@ -82,6 +82,20 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
             }
 #         endif // DYNAMIC_KEYMAP_LAYER_COUNT
         }
+        else {
+            // clear discrete layer indicator LEDs
+#         if (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
+            RGB_MATRIX_INDICATOR_SET_COLOR(
+                MIN((LAYER_INDICATOR_MIN + layer - 1), (LAYER_INDICATOR_MAX)),
+                0, 0, 0 // set to none
+            );
+#         else
+            RGB_MATRIX_INDICATOR_SET_COLOR(
+                MIN((LAYER_INDICATOR_MAX + layer - 1), (LAYER_INDICATOR_MIN)),
+                0, 0, 0 // set to none
+            );
+#         endif
+        }
     }
     return false;
 }
