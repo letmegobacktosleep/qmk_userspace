@@ -13,3 +13,8 @@
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
 #define TAPPING_TERM 250
 #define TAPPING_TOGGLE 3
+
+/* Configure RGB LED indicators*/
+#define DISCRETE_CAPS 0
+#define DISCRETE_NUML 1
+#define DISCRETE_SCRL 2
