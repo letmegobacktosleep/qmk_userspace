@@ -81,7 +81,7 @@
         }
     },
     "ws2812": {
-        "pin": "GP0",
+        "pin": "GP23",
         "driver": "vendor"
     },
     "rgb_matrix": {
