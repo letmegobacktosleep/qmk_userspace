@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0-or-later */
 
 #include QMK_KEYBOARD_H
-#include "../../rgb.c"
+#include "../../../rgb.c"
 
 enum macro_keycode {
     M_1 = QK_MACRO,

@@ -1,12 +1,9 @@
-#pragma message "Compiling rgb.c"
+/* SPDX-License-Identifier: GPL-2.0-or-later */
+
+#include QMK_KEYBOARD_H
 
 #ifdef RGB_MATRIX_ENABLE
-
-#define DISCRETE_CAPS 3
-#define DISCRETE_NUML 4
-#define DISCRETE_SCRL 5
-#define LAYER_INDICATOR_MIN 2
-#define LAYER_INDICATOR_MAX 0
+#pragma message "Compiling rgb.c"
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
 
@@ -16,39 +13,52 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
     led_t led_state = host_keyboard_led_state();
 
     // set the caps, num, scroll indicators (not implemented: compose, kana)
+# ifdef DISCRETE_CAPS
+# pragma message "Compiling Caps Lock indicator"
     if (led_state.caps_lock) {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_CAPS, val, val, val);
     } else {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_CAPS, 0, 0, 0);
     }
+# endif
+# ifdef DISCRETE_NUML
+# pragma message "Compiling Number Lock indicator"
     if (led_state.num_lock) {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_NUML, val, val, val);
     } else {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_NUML, 0, 0, 0);
     }
+# endif
+# ifdef DISCRETE_SCRL
+# pragma message "Compiling Scroll Lock indicator"
     if (led_state.scroll_lock) {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_SCRL, val, val, val);
     } else {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_SCRL, 0, 0, 0);
     }
+# endif
 
     for (uint8_t layer = 1; layer < DYNAMIC_KEYMAP_LAYER_COUNT; layer++){
         // check if layer is active
         if (layer_state_is(layer)){
 
             // set discrete layer indicator LEDs
-#         if (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
+#         if defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
+#         pragma message "Compiling Layer indicators"
+#          if (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
             RGB_MATRIX_INDICATOR_SET_COLOR(
                 MIN((LAYER_INDICATOR_MIN + layer - 1), (LAYER_INDICATOR_MAX)),
                 val, val, val // set to white
             );
-#         else
+#          else // !(LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
             RGB_MATRIX_INDICATOR_SET_COLOR(
                 MIN((LAYER_INDICATOR_MAX + layer - 1), (LAYER_INDICATOR_MIN)),
                 val, val, val // set to white
             );
-#         endif
-#         ifdef DYNAMIC_KEYMAP_LAYER_COUNT
+#          endif // (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
+#         endif // defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
+#         if defined(ENABLE_PER_KEY_LAYER_INDICATOR) && defined(DYNAMIC_KEYMAP_LAYER_COUNT)
+#         pragma message "Compiling Per-Key Layer indicators"
             // set HSV
             hsv_t hsv = (hsv_t){
                 // rainbow
@@ -80,21 +90,23 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
                     }
                 }
             }
-#         endif // DYNAMIC_KEYMAP_LAYER_COUNT
+#         endif // defined(ENABLE_PER_KEY_LAYER_INDICATOR) && defined(DYNAMIC_KEYMAP_LAYER_COUNT)
         }
         else {
             // clear discrete layer indicator LEDs
-#         if (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
+#         if defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
+#          if (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
             RGB_MATRIX_INDICATOR_SET_COLOR(
                 MIN((LAYER_INDICATOR_MIN + layer - 1), (LAYER_INDICATOR_MAX)),
                 0, 0, 0 // set to none
             );
-#         else
+#          else // !(LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
             RGB_MATRIX_INDICATOR_SET_COLOR(
                 MIN((LAYER_INDICATOR_MAX + layer - 1), (LAYER_INDICATOR_MIN)),
                 0, 0, 0 // set to none
             );
-#         endif
+#          endif // (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
+#         endif // defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
         }
     }
     return false;
