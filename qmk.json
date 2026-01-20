@@ -3,6 +3,7 @@
     "build_targets": [
         ["letmegobacktosleep/split65",          "vial"],
         ["letmegobacktosleep/le_chiffre_rgb",   "vial"],
+        ["letmegobacktosleep/keebsocmilk",      "vial"],
         ["letmegobacktosleep/letmesleep44d",    "vial"],
         ["letmegobacktosleep/letmesleep39d3r",  "vial"],
         ["letmegobacktosleep/letmesleep39d3r",  "vial_indicators"],
