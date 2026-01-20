@@ -1,0 +1,11 @@
+#pragma once
+
+/* Add RGB Lighting for onboard WS2812 led on RP2040 zero */
+#define RGBLIGHT_MAX_LAYERS 1
+
+/* Change emulated EEPROM size for RP2040 */
+#define WEAR_LEVELING_RP2040_FLASH_SIZE (2*1024*1024)
+#define WEAR_LEVELING_RP2040_FLASH_BASE ((2*1024*1024)-(128*1024))
+#define WEAR_LEVELING_LOGICAL_SIZE (64*1024)
+#define WEAR_LEVELING_BACKING_SIZE (128*1024)
+#define BACKING_STORE_WRITE_SIZE 2

@@ -1,0 +1,70 @@
+{
+    "manufacturer": "letmegobacktosleep",
+    "keyboard_name": "keebsocmilk",
+    "maintainer": "letmegobacktosleep",
+    "processor": "RP2040",
+    "bootloader": "rp2040",
+    "usb": {
+        "vid": "0xFEED",
+        "pid": "0x943E",
+        "device_version": "0.0.1"
+    },
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": false
+    },
+    "qmk": {
+        "tap_keycode_delay": 10
+    },
+    "rgblight": {
+        "led_count": 1,
+        "animations": {
+            "static_light": true,
+            "breathing": true,
+            "rainbow_mood": true,
+            "rainbow_swirl": true,
+            "snake": true,
+            "knight": true,
+            "christmas": true,
+            "static_gradient": true,
+            "rgb_test": true,
+            "alternating": true
+        },
+        "default": {
+            "animation": "rainbow_mood",
+            "on": true,
+            "hue": 0,
+            "sat": 192,
+            "val": 255,
+            "speed": 64
+        },
+        "driver": "ws2812",
+        "split": true,
+        "split_count": [1, 1],
+        "hue_steps": 32,
+        "saturation_steps": 32,
+        "brightness_steps": 32,
+        "sleep": true
+    },
+    "ws2812": {
+        "driver": "vendor",
+        "pin": "GP16"
+    },
+    "matrix_pins": {
+        "direct": [
+            ["GP8", "GP1"]
+        ]
+    },
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                { "matrix": [0, 0], "x": 0, "y": 0 },
+                { "matrix": [0, 1], "x": 1, "y": 0 }
+            ]
+        }
+    }
+}

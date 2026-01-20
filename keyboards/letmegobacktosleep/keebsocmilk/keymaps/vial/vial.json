@@ -1,0 +1,30 @@
+{
+  "name": "letmesleepsplit",
+  "vendorId": "0xFEED",
+  "productId": "0x943e",
+  "lighting": "qmk_rgblight",
+  "customKeycodes": [
+    {
+      "name": "AT_T",
+      "title": "Alt Tab with Timeout",
+      "shortName": "AT_T"
+    },
+    {
+      "name": "AT_R",
+      "title": "Alt Tab with Repeat",
+      "shortName": "AT_R"
+    }
+  ],
+  "matrix": {
+    "rows": 1,
+    "cols": 2
+  },
+  "layouts": {
+    "keymap": [
+      [
+        "0,0",
+        "0,1"
+      ]
+    ]
+  }
+}
