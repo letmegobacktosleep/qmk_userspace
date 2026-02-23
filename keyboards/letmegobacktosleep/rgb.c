@@ -43,7 +43,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
 # if defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
 # pragma message "Compiling Layer indicators"
     int8_t  diff = (int8_t)LAYER_INDICATOR_MAX - (int8_t)LAYER_INDICATOR_MIN;
-    uint8_t distance = abs(diff)
+    uint8_t distance = abs(diff);
 # endif // defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
 
     for (uint8_t layer = 1; layer < DYNAMIC_KEYMAP_LAYER_COUNT; layer++){
