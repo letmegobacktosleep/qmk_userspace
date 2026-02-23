@@ -1,8 +1,10 @@
 /* SPDX-License-Identifier: GPL-2.0-or-later */
 
+#include <stdlib.h>
 #include QMK_KEYBOARD_H
 
 #ifdef RGB_MATRIX_ENABLE
+// #if defined(RGB_MATRIX_EMABLE) && defined(DYNAMIC_KEYMAP_LAYER_COUNT)
 #pragma message "Compiling rgb.c"
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
@@ -38,26 +40,32 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
     }
 # endif
 
+# if defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
+# pragma message "Compiling Layer indicators"
+    int8_t  diff = (int8_t)LAYER_INDICATOR_MAX - (int8_t)LAYER_INDICATOR_MIN;
+    uint8_t distance = abs(diff)
+# endif // defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
+
     for (uint8_t layer = 1; layer < DYNAMIC_KEYMAP_LAYER_COUNT; layer++){
+
+#     if defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
+        uint8_t offset = MIN(layer - 1, distance);
+        int8_t  u_layer_led_index = (int8_t)LAYER_INDICATOR_MIN + (offset * (diff >= 0 ? 1 : -1));
+        uint8_t layer_led_index = (uint8_t)u_layer_led_index;
+#     endif // defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
+
         // check if layer is active
         if (layer_state_is(layer)){
 
             // set discrete layer indicator LEDs
 #         if defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
-#         pragma message "Compiling Layer indicators"
-#          if (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
             RGB_MATRIX_INDICATOR_SET_COLOR(
-                MIN((LAYER_INDICATOR_MIN + layer - 1), (LAYER_INDICATOR_MAX)),
+                layer_led_index,
                 val, val, val // set to white
             );
-#          else // !(LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
-            RGB_MATRIX_INDICATOR_SET_COLOR(
-                MIN((LAYER_INDICATOR_MAX + layer - 1), (LAYER_INDICATOR_MIN)),
-                val, val, val // set to white
-            );
-#          endif // (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
 #         endif // defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
-#         if defined(ENABLE_PER_KEY_LAYER_INDICATOR) && defined(DYNAMIC_KEYMAP_LAYER_COUNT)
+
+#         ifdef ENABLE_PER_KEY_LAYER_INDICATOR
 #         pragma message "Compiling Per-Key Layer indicators"
             // set HSV
             hsv_t hsv = (hsv_t){
@@ -90,24 +98,18 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
                     }
                 }
             }
-#         endif // defined(ENABLE_PER_KEY_LAYER_INDICATOR) && defined(DYNAMIC_KEYMAP_LAYER_COUNT)
+#         endif // ENABLE_PER_KEY_LAYER_INDICATOR
         }
+
+#     if defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
         else {
             // clear discrete layer indicator LEDs
-#         if defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
-#          if (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
             RGB_MATRIX_INDICATOR_SET_COLOR(
-                MIN((LAYER_INDICATOR_MIN + layer - 1), (LAYER_INDICATOR_MAX)),
+                layer_led_index,
                 0, 0, 0 // set to none
             );
-#          else // !(LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
-            RGB_MATRIX_INDICATOR_SET_COLOR(
-                MIN((LAYER_INDICATOR_MAX + layer - 1), (LAYER_INDICATOR_MIN)),
-                0, 0, 0 // set to none
-            );
-#          endif // (LAYER_INDICATOR_MIN <= LAYER_INDICATOR_MAX)
-#         endif // defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
         }
+#     endif // defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
     }
     return false;
 }
