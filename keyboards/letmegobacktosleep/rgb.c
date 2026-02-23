@@ -11,33 +11,35 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max){
 
     // get the current brightness value
     uint8_t val = rgb_matrix_get_val();
-    // get the current led state
-    led_t led_state = host_keyboard_led_state();
 
     // set the caps, num, scroll indicators (not implemented: compose, kana)
-# ifdef DISCRETE_CAPS
-# pragma message "Compiling Caps Lock indicator"
+# if defined(DISCRETE_CAPS) || defined(DISCRETE_NUML) || defined(DISCRETE_SCRL)
+    // get the current led state
+    led_t led_state = host_keyboard_led_state();
+#  ifdef DISCRETE_CAPS
+#  pragma message "Compiling Caps Lock indicator"
     if (led_state.caps_lock) {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_CAPS, val, val, val);
     } else {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_CAPS, 0, 0, 0);
     }
-# endif
-# ifdef DISCRETE_NUML
-# pragma message "Compiling Number Lock indicator"
+#  endif
+#  ifdef DISCRETE_NUML
+#  pragma message "Compiling Number Lock indicator"
     if (led_state.num_lock) {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_NUML, val, val, val);
     } else {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_NUML, 0, 0, 0);
     }
-# endif
-# ifdef DISCRETE_SCRL
-# pragma message "Compiling Scroll Lock indicator"
+#  endif
+#  ifdef DISCRETE_SCRL
+#  pragma message "Compiling Scroll Lock indicator"
     if (led_state.scroll_lock) {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_SCRL, val, val, val);
     } else {
         RGB_MATRIX_INDICATOR_SET_COLOR(DISCRETE_SCRL, 0, 0, 0);
     }
+#  endif
 # endif
 
 # if defined(LAYER_INDICATOR_MIN) && defined(LAYER_INDICATOR_MAX)
