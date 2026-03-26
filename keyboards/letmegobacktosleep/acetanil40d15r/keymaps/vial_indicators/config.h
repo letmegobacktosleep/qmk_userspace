@@ -1,0 +1,20 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later */
+
+#pragma once
+
+#define VIAL_KEYBOARD_UID {0x1D, 0x2B, 0x32, 0x17, 0xD1, 0x55, 0xB8, 0x4E}
+
+/* CONSIDER ADDING AN UNLOCK COMBO. SEE DOCUMENTATION. */
+#define VIAL_INSECURE
+
+#define VIAL_TAP_DANCE_ENTRIES 64
+#define VIAL_COMBO_ENTRIES 64
+#define VIAL_KEY_OVERRIDE_ENTRIES 64
+#define DYNAMIC_KEYMAP_LAYER_COUNT 8
+#define TAPPING_TERM 250
+#define TAPPING_TOGGLE 3
+
+/* Configure RGB LED indicators*/
+#define DISCRETE_CAPS 0
+#define DISCRETE_NUML 1
+#define DISCRETE_SCRL 2
