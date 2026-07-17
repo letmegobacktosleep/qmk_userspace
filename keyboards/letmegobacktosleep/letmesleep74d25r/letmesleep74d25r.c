@@ -6,9 +6,9 @@
 void keyboard_pre_init_user(void) {
     // Trigger a hardware reset for the mouse sensor
     gpio_set_pin_output(GP22);
-    gpio_write_pin_high(GP22);
-    wait_ms(1); // Wait at least 100ns
     gpio_write_pin_low(GP22);
+    wait_ms(1); // Wait at least 100ns
+    gpio_write_pin_high(GP22);
     gpio_set_pin_input(GP22);
 }
 
